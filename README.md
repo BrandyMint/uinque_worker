@@ -1,5 +1,7 @@
 # UniqueWorker
 
+[![Build Status](https://travis-ci.org/BrandyMint/unique_worker.svg)](https://travis-ci.org/BrandyMint/unique_worker)
+
 Модуль предназначет для исключения ситуации
 когда один воркер выполняется параллельно.
 В большинстве случаев это не нужно и опасно (напирмер нет смысла параллельно генерировать новый valuta.xml)

@@ -5,6 +5,11 @@ require "unique_worker/version"
 require "unique_worker/lock_manager"
 
 module UniqueWorker
+  PREFIX = 'UniqueWorker'
+  SEPARATOR = ':'
+
+  mattr_accessor :namespace
+
   mattr_accessor :disable
 
   mattr_accessor :redis_servers
@@ -22,9 +27,13 @@ module UniqueWorker
       redis_timeout: 0.1  # seconds
   }
 
+  def self.namespace_to_use
+    Rails.env if defined? Rails
+  end
+
   unless disable
     def perform(*args)
-      LockManager.lock! [VERSION, ':', self.class.name].join, lock_time_msec do
+      LockManager.lock! [PREFIX, UniqueWorker.namespace_to_use, VERSION, self.class.name].join(SEPARATOR), lock_time_msec do
         super(*args)
       end
     rescue Redlock::LockError => err

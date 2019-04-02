@@ -37,7 +37,11 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```
+class GenerateCompositeStatusWorker                                                                                                                                                                                                       
+  include Sidekiq::Worker                                                                                                                                                                                                                                                                                                                 
+  prepend UniqueWorker  
+```
 
 ## Development
 
